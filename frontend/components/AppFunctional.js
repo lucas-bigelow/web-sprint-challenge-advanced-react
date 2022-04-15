@@ -136,6 +136,35 @@ export default function AppFunctional(props) {
     }
   }
 
+  /* --- EVENT HANDLERS --- */
+
+  // handles a user changing their email
+  const handleInputChange = evt => {
+    setGridState({...gridState, email: evt.target.value});
+  }
+
+  // handles when a user clicks on a direction
+  const handleMovement = evt => {
+    outOfBoundsHelper(evt.target.id);
+  }
+
+  // handles when a user wants to reset their board
+  const handleReset = () => {
+    setGridState(initialState);
+  }
+
+  // makes a post request when a user submits their info, giving them a success or fail message
+  const handleSubmit = evt => {
+    evt.preventDefault();
+    const [x, y] = getCurrentCoordinates();
+
+    axios.post(URL, { x: x, y: y, steps: gridState.timesMoved, email: gridState.email })
+      .then(res => setGridState({...gridState, message: res.data.message, email: ''}))
+      .catch(err => {
+        setGridState({...gridState, message: err.response.data.message})
+      });
+  }
+
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
