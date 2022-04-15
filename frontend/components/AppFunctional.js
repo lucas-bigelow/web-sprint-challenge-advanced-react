@@ -179,19 +179,19 @@ export default function AppFunctional(props) {
         })}
       </div>
       <div className="info">
-        <h3 id="message"></h3>
+        <h3 id="message">{gridState.message}</h3>
       </div>
       <div id="keypad">
-        <button id="left">LEFT</button>
-        <button id="up">UP</button>
-        <button id="right">RIGHT</button>
-        <button id="down">DOWN</button>
-        <button id="reset">reset</button>
-      </div>
-      <form>
-        <input id="email" type="email" placeholder="type email"></input>
-        <input id="submit" type="submit"></input>
-      </form>
+          <button id="left" onClick={handleMovement}>LEFT</button>
+          <button id="up" onClick={handleMovement}>UP</button>
+          <button id="right" onClick={handleMovement}>RIGHT</button>
+          <button id="down" onClick={handleMovement}>DOWN</button>
+          <button id="reset" onClick={handleReset}>reset</button>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <input id="email" type="email" placeholder="type email" value={gridState.email} onChange={handleInputChange}></input>
+          <input id="submit" type="submit"></input>
+        </form>
     </div>
   )
 }
