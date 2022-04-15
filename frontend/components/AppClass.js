@@ -160,32 +160,28 @@ export default class AppClass extends React.Component {
     return (
       <div id="wrapper" className={className}>
         <div className="info">
-          <h3 id="coordinates">Coordinates (2, 2)</h3>
-          <h3 id="steps">You moved 0 times</h3>
+          {/* change the coordinates and number of times moved based on information from state */}
+          <h3 id="coordinates">Coordinates {this.stringifyCoordinates()}</h3>
+          <h3 id="steps">You moved {this.state.timesMoved} {this.state.timesMoved === 1 ? "time" : "times"}</h3>
         </div>
         <div id="grid">
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square active">B</div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
-          <div className="square"></div>
+          {/* dynamically render the various squares based on whether or not the given square is 'active' (either '' or 'B') */}
+          {this.state.grid.map(square => {
+            return <div className={square ? "square active" : "square"}>{square}</div>
+          })}
         </div>
         <div className="info">
-          <h3 id="message"></h3>
+          <h3 id="message">{this.state.message}</h3>
         </div>
         <div id="keypad">
-          <button id="left">LEFT</button>
-          <button id="up">UP</button>
-          <button id="right">RIGHT</button>
-          <button id="down">DOWN</button>
-          <button id="reset">reset</button>
+          <button id="left" onClick={this.handleMovement}>LEFT</button>
+          <button id="up" onClick={this.handleMovement}>UP</button>
+          <button id="right" onClick={this.handleMovement}>RIGHT</button>
+          <button id="down" onClick={this.handleMovement}>DOWN</button>
+          <button id="reset" onClick={this.handleReset}>reset</button>
         </div>
-        <form>
-          <input id="email" type="email" placeholder="type email"></input>
+        <form onSubmit={this.handleSubmit}>
+          <input id="email" type="email" placeholder="type email" value={this.state.email} onChange={this.handleInputChange}></input>
           <input id="submit" type="submit"></input>
         </form>
       </div>
