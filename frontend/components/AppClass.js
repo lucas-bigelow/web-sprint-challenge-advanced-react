@@ -127,6 +127,34 @@ export default class AppClass extends React.Component {
     }
   }
 
+  /* --- EVENT HANDLERS --- */
+
+  // handles a user changing their email
+  handleInputChange = evt => {
+    this.setState({...this.state, email: evt.target.value});
+  }
+
+  // handles when a user clicks on a direction
+  handleMovement = evt => {
+    this.outOfBoundsHelper(evt.target.id);
+  }
+
+  // handles when a user wants to reset their board
+  handleReset = () => {
+    this.setState(initialState);
+  }
+
+  // makes a post request when a user submits their info, giving them a success or fail message
+  handleSubmit = evt => {
+    evt.preventDefault();
+    const [x, y] = this.getCurrentCoordinates();
+    axios.post(URL, { x: x, y: y, steps: this.state.timesMoved, email: this.state.email })
+      .then(res => this.setState({...this.state, message: res.data.message, email: ''}))
+      .catch(err => {
+        this.setState({...this.state, message: err.response.data.message})
+      });
+  }
+
   render() {
     const { className } = this.props
     return (
