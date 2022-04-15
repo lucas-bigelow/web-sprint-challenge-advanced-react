@@ -139,19 +139,15 @@ export default function AppFunctional(props) {
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
-        <h3 id="coordinates">Coordinates (2, 2)</h3>
-        <h3 id="steps">You moved 0 times</h3>
+        {/* change the coordinates and number of times moved based on information from state */}
+        <h3 id="coordinates">Coordinates {stringifyCoordinates()}</h3>
+        <h3 id="steps">You moved {gridState.timesMoved} {gridState.timesMoved === 1 ? "time" : "times"}</h3>
       </div>
       <div id="grid">
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square active">B</div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
-        <div className="square"></div>
+        {/* dynamically render the various squares based on whether or not the given square is 'active' (either '' or 'B') */}
+        {gridState.grid.map(square => {
+            return <div className={square ? "square active" : "square"}>{square}</div>
+        })}
       </div>
       <div className="info">
         <h3 id="message"></h3>
